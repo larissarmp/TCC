@@ -4,21 +4,20 @@ import importlib
 
 
 importlib.reload(sys)
-dbConnection = { 'sideufg_db':"dbname=sideufg_db user=larissa host=200.137.220.157 password=pamonha&cafe",
-                 'energia_stage':"dbname=energia_stage user=postgres password=1521"}
+dbConnection = { 'energia_dw':"dbname=energia_dw user=postgres host=127.0.0.0 password=1521 port=5432",
+                 'energia_stage':"dbname=energia_stage user=postgres host=127.0.0.0 password=1521 port=5432"}
 
-sourceConnetion = pg.connect(dbConnection['sideufg_db'])
+sourceConnetion = pg.connect(dbConnection['energia_dw'])
 targetConnection = pg.connect(dbConnection ['energia_stage'])
 
 sourceCursor = sourceConnection.cursor()
 targetCursor = targetConnection.cursor()
 
-sourceCursor.execute(""" SELECT *
-FROM public.sideufg_adicional_fatura""")
+sourceCursor.execute(""" SELECT table_name FROM information_schema.columns where table_name in ('nome')""")
 
 sourceTables = sourceCursor.fetchall()
 
 for t in sourceTables:
-    # targetConnection.execute('drop table if exists %s' % (t[0]))
-    sourceDs = etl.fromdb(sourceConnection, "select * from sideufg_adicional_fatura")
+    targetConnection.execute('drop table if exists %s' % (t[0]))
+    sourceDs = etl.fromdb(sourceConnection, "select * from test" %(t[0]))
     etl.todb(sourceConnection, targetConnection, t[0])
