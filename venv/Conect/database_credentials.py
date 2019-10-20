@@ -4,10 +4,10 @@ import importlib
 
 
 importlib.reload(sys)
-dbConnection = { 'energia_dw':"dbname=energia_dw user=postgres host=127.0.0.0 password=1521 port=5432",
-                 'energia_stage':"dbname=energia_stage user=postgres host=127.0.0.0 password=1521 port=5432"}
+dbConnection = { 'sideufg_db':"dbname=sideufg_db user=larissa host=200.137.220.157 password=pamonha&cafe port=5432",
+                 'energia_stage':"dbname=energia_stage user=postgres host=localhost password=1521 port=5432"}
 
-sourceConnetion = pg.connect(dbConnection['energia_dw'])
+sourceConnection = pg.connect(dbConnection['sideufg_db'])
 targetConnection = pg.connect(dbConnection ['energia_stage'])
 
 sourceCursor = sourceConnection.cursor()
