@@ -1,5 +1,5 @@
 import petl as etl, psycopg2 as pg, sys
-from sqlalchemy import *
+# from sqlalchemy import *
 import importlib
 
 
@@ -13,11 +13,13 @@ targetConnection = pg.connect(dbConnection ['energia_stage'])
 sourceCursor = sourceConnection.cursor()
 targetCursor = targetConnection.cursor()
 
-sourceCursor.execute(""" SELECT table_name FROM information_schema.columns where table_name in ('nome')""")
+sourceCursor.execute(""" SELECT table_name FROM information_schema.columns where table_name in ('sideufg_adicional_fatura',
+                        'sideufg_dado_fatura', 'sideufg_endereco','sideufg_fatura','sideufg_juros_fatura',
+                        'sideufg_multa_fatura')""")
 
 sourceTables = sourceCursor.fetchall()
 
 for t in sourceTables:
-    targetConnection.execute('drop table if exists %s' % (t[0]))
-    sourceDs = etl.fromdb(sourceConnection, "select * from test" %(t[0]))
-    etl.todb(sourceConnection, targetConnection, t[0])
+    targetCursor.execute('drop table if exists %s' % (t[0]))
+    sourceDs = etl.fromdb(sourceConnection, "select * from %s" %(t[0]))
+    etl.todb(sourceDs, targetConnection, t[0], create=True, sample=1000000)
