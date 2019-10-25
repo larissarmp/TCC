@@ -1,5 +1,5 @@
 import petl as etl, psycopg2 as pg, sys
-# from sqlalchemy import *
+from sqlalchemy import *
 import importlib
 
 
