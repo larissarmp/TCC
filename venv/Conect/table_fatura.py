@@ -16,5 +16,5 @@ sourceTables = sourceCursor.fetchall()
 
 for t in sourceTables:
 
-    fatura = etl.join('sideufg_fatura', 'sideufg_juros_fatura', key='id');
+    fatura = etl.join('sideufg_fatura', 'sideufg_juros_fatura')
 

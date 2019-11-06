@@ -1,8 +1,8 @@
+
 import petl as etl, psycopg2 as pg, sys
 from sqlalchemy import *
 import importlib
 import timestamp
-from datetime import datetime
 
 
 importlib.reload(sys)
