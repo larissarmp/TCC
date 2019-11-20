@@ -23,3 +23,7 @@ for t in sourceTables:
     targetCursor.execute('drop table if exists %s' % (t[0]))
     sourceDs = etl.fromdb(sourceConnection, "select * from %s" %(t[0]))
     etl.todb(sourceDs, targetConnection, t[0], create=True, sample=1000000)
+
+
+
+    
