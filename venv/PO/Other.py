@@ -16,7 +16,7 @@ class BBTreeNode():
 
     def buildProblem(self):
         prob = cvx.Problem(cvx.Minimize(self.objective),
-                           self.constraints)  # i put Minimize, just so you know that I'm assuming it
+                           self.constraints)  # coloquei o Minimize, pois eu estou assumindo isso
         return prob
 
     def is_integral(self):
@@ -25,7 +25,7 @@ class BBTreeNode():
     def branch(self):
         children = []
         for b in [0, 1]:
-            n1 = copy.deepcopy(self)  # yeesh. Not good performance wise, but is simple implementation-wise
+            n1 = copy.deepcopy(self)  # Not good performance wise, but is simple implementation-wise
             v = n1.heuristic()  # dangerous what if they don't do the same one? I need to do it here though because I need access to copied v.
             n1.constraints.append(v == b)  # add in the new binary constraint
             n1.children = []
